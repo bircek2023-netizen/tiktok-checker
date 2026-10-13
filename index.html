@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Cek Akun TikTok – Analisa & Saran Perbaikan</title>
+<style>
+:root{--bg:#fff;--card:#f6f6f8;--tx:#16161a;--mu:#6b6b76;--bd:#e3e3e8;--pk:#fe2c55;--cy:#12b5c0;--ok:#1a9d5c;--wn:#d98a00;--bad:#e03131;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#101014;--card:#1b1b21;--tx:#f2f2f5;--mu:#9a9aa6;--bd:#2c2c35;--ok:#3ccf86;--wn:#f0b429;--bad:#ff6b6b}}
+:root[data-theme="dark"]{--bg:#101014;--card:#1b1b21;--tx:#f2f2f5;--mu:#9a9aa6;--bd:#2c2c35;--ok:#3ccf86;--wn:#f0b429;--bad:#ff6b6b}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.w{max-width:760px;margin:0 auto;padding:18px 16px 40px}
+h1{font-size:22px;margin:0 0 4px}h1 span{color:var(--pk)}
+.sub{color:var(--mu);margin:0 0 16px;font-size:14px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:14px;margin-bottom:14px}
+h2{font-size:16px;margin:0 0 10px}
+.g{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+label{display:block;font-size:12px;color:var(--mu);margin-bottom:3px}
+input[type=text],input[type=number],select{width:100%;padding:10px;border-radius:9px;border:1px solid var(--bd);background:var(--bg);color:var(--tx);font-size:15px}
+.ck{display:flex;gap:8px;align-items:flex-start;padding:6px 0;font-size:14px;color:var(--tx)}
+.ck input{margin-top:3px;accent-color:var(--pk)}
+button{width:100%;padding:13px;border:0;border-radius:11px;background:var(--pk);color:#fff;font-size:16px;font-weight:600;cursor:pointer}
+button.s{background:var(--card);color:var(--tx);border:1px solid var(--bd);margin-top:8px}
+#res{display:none}
+.top{display:flex;gap:16px;align-items:center}
+.ring{position:relative;width:120px;height:120px;flex:none}
+.ring b{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:30px}
+.ring b small{font-size:11px;color:var(--mu);font-weight:400}
+.bar{height:8px;background:var(--bd);border-radius:5px;overflow:hidden;margin:4px 0 10px}
+.bar i{display:block;height:100%;border-radius:5px}
+.row{display:flex;justify-content:space-between;font-size:13px}
+.m{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.m div{background:var(--bg);border:1px solid var(--bd);border-radius:10px;padding:10px}
+.m small{color:var(--mu);font-size:12px;display:block}.m strong{font-size:18px}
+.m em{font-style:normal;font-size:12px}
+.rec{border-left:4px solid var(--bd);background:var(--bg);border-radius:8px;padding:9px 11px;margin-bottom:8px}
+.rec.p1{border-color:var(--bad)}.rec.p2{border-color:var(--wn)}.rec.p3{border-color:var(--cy)}
+.rec b{display:block;font-size:14px}.rec span{font-size:13px;color:var(--mu)}
+.tag{font-size:11px;font-weight:700;margin-right:6px}
+.p1 .tag{color:var(--bad)}.p2 .tag{color:var(--wn)}.p3 .tag{color:var(--cy)}
+ol{padding-left:20px;margin:0}ol li{margin-bottom:6px;font-size:14px}
+.note{font-size:12px;color:var(--mu);margin-top:8px}
+@media(max-width:420px){.top{flex-direction:column;align-items:flex-start}}
+</style>
+</head>
+<body>
+<div class="w">
+<h1>Cek Akun <span>TikTok</span></h1>
+<p class="sub">Isi data dari TikTok Studio / profil kamu (rata-rata 10 video terakhir), lalu dapatkan skor, analisa, dan daftar perbaikan prioritas.</p>
+
+<div class="card"><h2>1. Data akun</h2>
+<div class="g">
+<div><label>Username</label><input type="text" id="u" placeholder="@akunkamu"><button type="button" class="s" id="auto" style="margin-top:6px;padding:9px;font-size:14px">⚡ Cek otomatis online</button><div class="note" id="st"></div></div>
+<div><label>Niche</label><select id="niche"><option>Edukasi / Tips</option><option>Hiburan / Komedi</option><option>Kuliner</option><option>Fashion / Beauty</option><option>Bisnis / Jualan</option><option>Gaming</option><option>Lifestyle / Vlog</option><option>Lainnya</option></select></div>
+<div><label>Followers</label><input type="number" id="f" min="0" value="1000"></div>
+<div><label>Following</label><input type="number" id="fl" min="0" value="300"></div>
+<div><label>Total video</label><input type="number" id="tv" min="0" value="40"></div>
+<div><label>Posting per minggu</label><input type="number" id="ppw" min="0" step="0.5" value="3"></div>
+</div></div>
+
+<div class="card"><h2>2. Performa rata-rata per video</h2><label>Tempel link 3–10 video terakhir (satu per baris, opsional) agar rata-rata terisi otomatis</label><textarea id="vl" rows="3" placeholder="https://www.tiktok.com/@akunkamu/video/123..." style="width:100%;padding:10px;border-radius:9px;border:1px solid var(--bd);background:var(--bg);color:var(--tx);font-size:14px;margin-bottom:10px"></textarea>
+<div class="g">
+<div><label>Views</label><input type="number" id="v" min="0" value="1500"></div>
+<div><label>Likes</label><input type="number" id="l" min="0" value="60"></div>
+<div><label>Komentar</label><input type="number" id="c" min="0" value="4"></div>
+<div><label>Share</label><input type="number" id="s" min="0" value="3"></div>
+<div><label>Simpan (save)</label><input type="number" id="sv" min="0" value="5"></div>
+<div><label>Durasi video (detik)</label><input type="number" id="dur" min="1" value="30"></div>
+<div><label>Rata-rata % ditonton sampai habis (opsional)</label><input type="number" id="fin" min="0" max="100" placeholder="mis. 25"></div>
+</div></div>
+
+<div class="card"><h2>3. Checklist (centang yang sudah kamu lakukan)</h2><div id="cl"></div></div>
+
+<button id="go">Analisa Akun Sekarang</button>
+
+<div id="res">
+<div class="card" style="margin-top:14px"><div class="top">
+<div class="ring"><svg viewBox="0 0 120 120" width="120" height="120"><circle cx="60" cy="60" r="52" fill="none" stroke="var(--bd)" stroke-width="10"/><circle id="rc" cx="60" cy="60" r="52" fill="none" stroke="var(--pk)" stroke-width="10" stroke-linecap="round" stroke-dasharray="327" stroke-dashoffset="327" transform="rotate(-90 60 60)"/></svg><b><span id="sc">0</span><small>/ 100</small></b></div>
+<div><div id="gr" style="font-size:18px;font-weight:700"></div><div id="sm" style="color:var(--mu);font-size:14px"></div></div></div></div>
+
+<div class="card"><h2>Metrik kunci</h2><div class="m" id="mt"></div><p class="note">Patokan umum: engagement rate TikTok 4–8% sudah bagus; views ≥ 30% dari followers menandakan jangkauan sehat. Angka bisa berbeda per niche.</p></div>
+
+<div class="card"><h2>Skor per aspek</h2><div id="cat"></div></div>
+
+<div class="card"><h2>Yang harus diperbaiki (urut prioritas)</h2><div id="recs"></div></div>
+
+<div class="card"><h2>Rencana 7 hari</h2><ol id="plan"></ol></div>
+<button class="s" id="pr">Cetak / Simpan PDF</button>
+</div>
+</div>
+<script>
+var ITEMS=[
+["profil","Foto profil jelas & konsisten",1,"Pakai foto/logo yang jelas dan konsisten","Profil yang rapi meningkatkan kepercayaan dan konversi follow dari penonton baru."],
+["profil","Bio menjelaskan niche & manfaat akun",1,"Tulis bio 1 kalimat: siapa kamu + apa yang penonton dapat","Contoh: 'Tips hemat listrik rumah | Upload Sen-Rab-Jum'. Orang follow karena tahu manfaatnya."],
+["profil","Ada link / CTA di bio",3,"Tambahkan link atau ajakan di bio","Arahkan ke WhatsApp, toko, atau akun lain agar traffic tidak berhenti di TikTok."],
+["profil","Username & nama mengandung kata kunci niche",2,"Optimalkan nama akun dengan kata kunci niche","Kolom Nama bisa diubah dan ikut tercari di pencarian TikTok (SEO)."],
+["profil","3 video pin berisi konten terbaik",2,"Pin 3 video terbaik / pengantar akun","Pengunjung baru menilai akun dari 3 video pin dalam hitungan detik."],
+["konten","Hook kuat di 3 detik pertama",1,"Perkuat hook 3 detik pertama","Mulai dengan hasil/pertanyaan/masalah, bukan intro atau salam panjang. Ini faktor terbesar retensi."],
+["konten","Ada teks / subtitle di video",2,"Tambahkan teks layar & subtitle","Banyak orang menonton tanpa suara; teks menaikkan retensi dan memberi kata kunci pencarian."],
+["konten","Fokus pada 1 niche utama",1,"Fokuskan konten ke 1 niche","Algoritma perlu tahu siapa audiensmu. Konten campur-campur membuat distribusi tidak stabil."],
+["konten","Ada seri / format konten berulang",2,"Buat seri konten (Part 1, 2, 3 / format tetap)","Seri membuat orang menunggu video berikutnya dan menaikkan follow."],
+["konten","Pakai suara / tren yang relevan",3,"Gunakan suara tren yang cocok dengan niche","Pilih tren yang sesuai niche, bukan semua tren, agar audiens tetap tepat sasaran."],
+["konten","Ada CTA (komen / share / follow)",2,"Tambahkan CTA spesifik di akhir video","Contoh: 'Komen angka 1 kalau mau part 2' lebih efektif daripada 'jangan lupa follow'."],
+["konten","Caption + 3–5 hashtag relevan",3,"Rapikan caption & hashtag","Pakai kata kunci yang dicari orang dalam caption, plus 3–5 hashtag spesifik niche."],
+["konten","Kualitas visual & audio bersih",2,"Perbaiki cahaya, fokus, dan audio","Cahaya dari depan/jendela dan suara jelas sering lebih berpengaruh daripada kamera mahal."],
+["komunitas","Membalas komentar secara rutin",2,"Balas komentar di jam pertama setelah upload","Komentar awal memberi sinyal kuat; balas dengan video untuk bahan konten baru."],
+["komunitas","Memakai Stitch / Duet / balas komentar via video",3,"Manfaatkan Stitch, Duet, & balas komentar via video","Fitur ini menumpang jangkauan konten lain dan mudah jadi ide."],
+["komunitas","Pernah / rutin LIVE",3,"Coba LIVE singkat 15–30 menit mingguan","LIVE mempererat komunitas dan mempercepat tumbuhnya penggemar setia."],
+["komunitas","Posting di jam yang konsisten",3,"Tentukan jam posting tetap","Cek jam aktif followers di TikTok Studio, lalu posting di 2–3 jam terbaik secara konsisten."]
+];
+var cl=document.getElementById("cl"),grp="";
+ITEMS.forEach(function(it,i){if(it[0]!==grp){grp=it[0];var h=document.createElement("div");h.style.cssText="font-weight:700;font-size:13px;margin:8px 0 2px;color:var(--pk);text-transform:uppercase";h.textContent=grp;cl.appendChild(h)}
+var d=document.createElement("label");d.className="ck";d.innerHTML='<input type="checkbox" id="k'+i+'"><span>'+it[1]+'</span>';cl.appendChild(d)});
+function n(id){var v=parseFloat(document.getElementById(id).value);return isNaN(v)||v<0?0:v}
+function col(x){return x>=70?"var(--ok)":x>=45?"var(--wn)":"var(--bad)"}
+function pct(a,b){return b>0?a/b*100:0}
+function fmt(x){return x.toFixed(1).replace(".",",")+"%"}
+document.getElementById("go").onclick=function(){
+var f=n("f"),fl=n("fl"),v=n("v"),l=n("l"),c=n("c"),s=n("s"),sv=n("sv"),ppw=n("ppw"),dur=n("dur"),fin=document.getElementById("fin").value,tv=n("tv");
+var er=pct(l+c+s+sv,v),reach=f>0?pct(v,f):0,cmR=pct(c,v),valR=pct(s+sv,l),likeR=pct(l,v),ff=f>0?fl/f:0;
+var sE=Math.min(100,er/8*100),sR=f>0?Math.min(100,reach/40*100):50,sC=Math.min(100,ppw/5*100);
+var g={profil:[0,0],konten:[0,0],komunitas:[0,0]},miss=[];
+ITEMS.forEach(function(it,i){var on=document.getElementById("k"+i).checked;g[it[0]][1]++;if(on)g[it[0]][0]++;else miss.push(it)});
+var sP=g.profil[0]/g.profil[1]*100,sK=g.konten[0]/g.konten[1]*100,sM=g.komunitas[0]/g.komunitas[1]*100;
+var tot=Math.round(sE*.25+sR*.2+sC*.15+sP*.1+sK*.2+sM*.1);
+var gr=tot>=80?"Sangat Baik":tot>=60?"Cukup Baik":tot>=40?"Perlu Perbaikan":"Perlu Dibenahi Serius";
+var u=document.getElementById("u").value.trim()||"Akun kamu";
+document.getElementById("sc").textContent=tot;
+document.getElementById("rc").style.strokeDashoffset=327-327*tot/100;document.getElementById("rc").style.stroke=col(tot);
+document.getElementById("gr").textContent=gr;
+var weak=[["engagement",sE],["jangkauan",sR],["konsistensi",sC],["profil",sP],["konten",sK],["komunitas",sM]].sort(function(a,b){return a[1]-b[1]})[0][0];
+document.getElementById("sm").textContent=u+" — aspek terlemah: "+weak+".";
+function mc(t,val,st,cl){return '<div><small>'+t+'</small><strong>'+val+'</strong><br><em style="color:'+cl+'">'+st+'</em></div>'}
+var h="";
+h+=mc("Engagement rate",fmt(er),er>=6?"Bagus":er>=3?"Rata-rata":"Rendah",col(sE));
+h+=mc("Views / followers",fmt(reach),reach>=30?"Sehat":reach>=10?"Biasa":"Jangkauan lemah",col(sR));
+h+=mc("Like / views",fmt(likeR),likeR>=5?"Bagus":likeR>=2.5?"Cukup":"Rendah",likeR>=5?"var(--ok)":likeR>=2.5?"var(--wn)":"var(--bad)");
+h+=mc("Komentar / views",fmt(cmR),cmR>=0.3?"Bagus":"Perlu dipancing",cmR>=0.3?"var(--ok)":"var(--wn)");
+h+=mc("Share+save / like",fmt(valR),valR>=15?"Konten bernilai":"Kurang 'disimpan'",valR>=15?"var(--ok)":"var(--wn)");
+h+=mc("Following / followers",ff.toFixed(2).replace(".",","),ff>1?"Terlalu tinggi":"Wajar",ff>1?"var(--wn)":"var(--ok)");
+document.getElementById("mt").innerHTML=h;
+var cats=[["Engagement",sE],["Jangkauan",sR],["Konsistensi posting",sC],["Profil",sP],["Konten",sK],["Komunitas",sM]],ch="";
+cats.forEach(function(x){var r=Math.round(x[1]);ch+='<div class="row"><span>'+x[0]+'</span><b>'+r+'</b></div><div class="bar"><i style="width:'+r+'%;background:'+col(r)+'"></i></div>'});
+document.getElementById("cat").innerHTML=ch;
+var R=[];
+if(ppw<3)R.push([1,"Naikkan frekuensi posting","Sekarang "+ppw+"x/minggu. Targetkan minimal 3–5x/minggu selama 30 hari untuk data yang cukup bagi algoritma."]);
+if(f>0&&reach<10)R.push([1,"Jangkauan sangat rendah ("+fmt(reach)+" dari followers)","Video jarang sampai ke followers sendiri. Cek apakah akun terkena batasan, perbaiki hook, dan hindari konten bercampur niche."]);
+else if(f>0&&reach<30)R.push([2,"Jangkauan masih bisa naik","Uji 3 variasi hook untuk topik yang sama dan lihat mana yang paling banyak ditonton."]);
+if(er<3)R.push([1,"Engagement rate rendah ("+fmt(er)+")","Fokus pada nilai: tips praktis, cerita, atau hiburan yang membuat orang menyimpan, membagikan, atau berkomentar."]);
+if(cmR<0.3)R.push([2,"Pancing komentar","Ajukan pertanyaan pilihan (A atau B) atau minta pendapat di akhir video; pin komentar terbaik."]);
+if(valR<15)R.push([2,"Buat konten yang layak disimpan/dibagikan","Format checklist, tutorial langkah-langkah, dan template biasanya paling sering di-save."]);
+if(fin!==""&&parseFloat(fin)<20)R.push([1,"Retensi rendah ("+fin+"% ditonton sampai habis)","Potong bagian pembuka yang bertele-tele, percepat ritme, dan perpendek video ke topik inti."]);
+if(dur>60&&er<4)R.push([2,"Durasi "+dur+" detik mungkin terlalu panjang","Coba 15–35 detik dulu sampai retensi stabil, baru naikkan durasi."]);
+if(ff>1)R.push([3,"Rasio following terlalu tinggi","Kurangi following akun yang tidak relevan agar profil terlihat berwibawa."]);
+if(tv<20)R.push([2,"Stok video masih sedikit ("+tv+")","Kumpulkan minimal 20–30 video dulu; pertumbuhan biasanya mulai terasa setelah itu."]);
+miss.forEach(function(it){R.push([it[2],it[3],it[4]])});
+R.sort(function(a,b){return a[0]-b[0]});
+var L={1:"KRITIS",2:"PENTING",3:"OPTIMASI"},rh="";
+R.forEach(function(r){rh+='<div class="rec p'+r[0]+'"><b><span class="tag">'+L[r[0]]+'</span>'+r[1]+'</b><span>'+r[2]+'</span></div>'});
+document.getElementById("recs").innerHTML=rh||'<p>Bagus! Tidak ada perbaikan besar. Pertahankan konsistensi dan terus uji ide baru.</p>';
+var top3=R.slice(0,3).map(function(r){return r[1]});
+var P=["Hari 1: Rapikan profil (foto, nama, bio, pin 3 video terbaik).","Hari 2: Tonton 5 video teratas di niche kamu; catat pola hook-nya.","Hari 3: Upload 1 video dengan hook baru"+(top3[0]?" — fokus: "+top3[0].toLowerCase():"")+".","Hari 4: Balas semua komentar; buat 1 video balasan komentar.","Hari 5: Upload video seri Part 1 dengan CTA spesifik.","Hari 6: Cek TikTok Studio: retensi, jam aktif, sumber traffic.","Hari 7: Evaluasi: bandingkan views & engagement; ulangi format yang menang."];
+document.getElementById("plan").innerHTML=P.map(function(x){return"<li>"+x+"</li>"}).join("");
+var rs=document.getElementById("res");rs.style.display="block";rs.scrollIntoView({behavior:"smooth"});
+};
+document.getElementById("auto").onclick=async function(){
+var st=document.getElementById("st"),u=document.getElementById("u").value.trim().replace(/^@/,"");
+if(!u){st.textContent="Isi username dulu.";return}
+st.textContent="Mengambil data @"+u+"...";
+try{var r=await fetch("/api/tiktok?u="+encodeURIComponent(u)+"&v="+encodeURIComponent(document.getElementById("vl").value.split(/\s+/).filter(Boolean).join(","))),d=await r.json();
+if(!r.ok)throw new Error(d.error||"Gagal");
+function set(i,v){document.getElementById(i).value=v}
+set("f",d.followers);set("fl",d.following);set("tv",d.videos);if(d.avgLikes)set("l",d.avgLikes);if(d.avg){set("v",d.avg.views);set("l",d.avg.likes);set("c",d.avg.comments);set("s",d.avg.shares);set("sv",d.avg.saves);if(d.avg.duration)set("dur",d.avg.duration);if(d.avg.ppw)set("ppw",d.avg.ppw)}
+document.getElementById("k1").checked=d.bio.length>=15;document.getElementById("k2").checked=!!d.bioLink;document.getElementById("k0").checked=d.avatar;
+st.textContent="Berhasil: "+d.nickname+(d.avg?". Semua data (termasuk rata-rata "+d.sample+" video terakhir) terisi otomatis.":". Profil terisi. "+(d.warn||"")+" Isi views, komentar, share, save dari TikTok Studio untuk hasil akurat.");document.getElementById("go").click()
+}catch(e){st.textContent="Gagal: "+e.message}};
+document.getElementById("pr").onclick=function(){window.print()};
+</script>
+</body>
+</html>
